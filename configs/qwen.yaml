@@ -1,0 +1,191 @@
+server:
+  base_url: http://127.0.0.1:8000/v1
+dataset:
+  repo_id: dddraxxx/ref_adv
+  split: train
+  start_index: 0
+  limit: 0
+  token_env: HF_TOKEN
+  filter:
+    human_authored: null
+    image_source: null
+generation:
+  max_tokens: 1024
+  temperature: 0.0
+  top_p: 1.0
+  seed: 7
+  timeout_sec: 180
+evaluation:
+  iou_threshold: 0.5
+  retry_followup_on_parse_fail: true
+  retry_followup_length_only: false
+  retry_followup_max_tokens: 1024
+  retry_followup_text: 'Your previous answer did not end with a valid JSON bbox output.\nNow
+    output ONLY one complete JSON code block.\nUse this exact schema:\n```json\n{"bboxes":
+    [[x1, y1, x2, y2]]}\n```\nDo not output any extra text.'
+prompts:
+  direct: '<image>
+
+    Locate every object that matches the description "{ref_sentence}" in the image.
+    Report bbox coordinates in JSON format.'
+  cot: '<image>
+
+    Locate every object that matches the description "{ref_sentence}" in the image.
+
+    Think first, then answer.
+
+    Finally report bbox coordinates in JSON format.'
+output:
+  dir: grounding_eval_repro/outputs/qwen
+models:
+  qwen25a32b:
+    model_full_name: Qwen/Qwen2.5-VL-32B-Instruct
+    pred_box_expected_format: abs_xyxy
+  qwen25a3b:
+    model_full_name: Qwen/Qwen2.5-VL-3B-Instruct
+    pred_box_expected_format: abs_xyxy
+  qwen25a72b:
+    model_full_name: Qwen/Qwen2.5-VL-72B-Instruct
+    pred_box_expected_format: abs_xyxy
+  qwen25a7b:
+    model_full_name: Qwen/Qwen2.5-VL-7B-Instruct
+    pred_box_expected_format: abs_xyxy
+  qwen35a122b:
+    model_full_name: Qwen/Qwen3.5-122B-A10B
+    pred_box_expected_format: norm_1000_xyxy
+  qwen35a27b:
+    model_full_name: Qwen/Qwen3.5-27B
+    pred_box_expected_format: norm_1000_xyxy
+  qwen35a35b:
+    model_full_name: Qwen/Qwen3.5-35B-A3B
+    pred_box_expected_format: norm_1000_xyxy
+  qwen35a397bfp8:
+    model_full_name: Qwen/Qwen3.5-397B-A17B-FP8
+    pred_box_expected_format: norm_1000_xyxy
+  qwen3a235b:
+    model_full_name: Qwen/Qwen3-VL-235B-A22B-Instruct
+    pred_box_expected_format: norm_1000_xyxy
+  qwen3a235bthinking:
+    model_full_name: Qwen/Qwen3-VL-235B-A22B-Thinking
+    pred_box_expected_format: norm_1000_xyxy
+  qwen3a2b:
+    model_full_name: Qwen/Qwen3-VL-2B-Instruct
+    pred_box_expected_format: norm_1000_xyxy
+  qwen3a2bthinking:
+    model_full_name: Qwen/Qwen3-VL-2B-Thinking
+    pred_box_expected_format: norm_1000_xyxy
+  qwen3a30b:
+    model_full_name: Qwen/Qwen3-VL-30B-A3B-Instruct
+    pred_box_expected_format: norm_1000_xyxy
+  qwen3a30bthinking:
+    model_full_name: Qwen/Qwen3-VL-30B-A3B-Thinking
+    pred_box_expected_format: norm_1000_xyxy
+  qwen3a32b:
+    model_full_name: Qwen/Qwen3-VL-32B-Instruct
+    pred_box_expected_format: norm_1000_xyxy
+  qwen3a32bthinking:
+    model_full_name: Qwen/Qwen3-VL-32B-Thinking
+    pred_box_expected_format: norm_1000_xyxy
+  qwen3a4b:
+    model_full_name: Qwen/Qwen3-VL-4B-Instruct
+    pred_box_expected_format: norm_1000_xyxy
+  qwen3a4bthinking:
+    model_full_name: Qwen/Qwen3-VL-4B-Thinking
+    pred_box_expected_format: norm_1000_xyxy
+  qwen3a8b:
+    model_full_name: Qwen/Qwen3-VL-8B-Instruct
+    pred_box_expected_format: norm_1000_xyxy
+  qwen3a8bthinking:
+    model_full_name: Qwen/Qwen3-VL-8B-Thinking
+    pred_box_expected_format: norm_1000_xyxy
+runs:
+- run_name: qwen25a32b_direct
+  model_key: qwen25a32b
+  prompt_id: direct
+- run_name: qwen25a32b_cot
+  model_key: qwen25a32b
+  prompt_id: cot
+- run_name: qwen25a3b_direct
+  model_key: qwen25a3b
+  prompt_id: direct
+- run_name: qwen25a3b_cot
+  model_key: qwen25a3b
+  prompt_id: cot
+- run_name: qwen25a72b_direct
+  model_key: qwen25a72b
+  prompt_id: direct
+- run_name: qwen25a72b_cot
+  model_key: qwen25a72b
+  prompt_id: cot
+- run_name: qwen25a7b_direct
+  model_key: qwen25a7b
+  prompt_id: direct
+- run_name: qwen25a7b_cot
+  model_key: qwen25a7b
+  prompt_id: cot
+- run_name: qwen35a122b_direct
+  model_key: qwen35a122b
+  prompt_id: direct
+- run_name: qwen35a27b_direct
+  model_key: qwen35a27b
+  prompt_id: direct
+- run_name: qwen35a35b_direct
+  model_key: qwen35a35b
+  prompt_id: direct
+- run_name: qwen35a397bfp8_direct
+  model_key: qwen35a397bfp8
+  prompt_id: direct
+- run_name: qwen3a235b_direct
+  model_key: qwen3a235b
+  prompt_id: direct
+- run_name: qwen3a235b_cot
+  model_key: qwen3a235b
+  prompt_id: cot
+- run_name: qwen3a235bthinking_direct
+  model_key: qwen3a235bthinking
+  prompt_id: direct
+- run_name: qwen3a2b_direct
+  model_key: qwen3a2b
+  prompt_id: direct
+- run_name: qwen3a2b_cot
+  model_key: qwen3a2b
+  prompt_id: cot
+- run_name: qwen3a2bthinking_direct
+  model_key: qwen3a2bthinking
+  prompt_id: direct
+- run_name: qwen3a30b_direct
+  model_key: qwen3a30b
+  prompt_id: direct
+- run_name: qwen3a30b_cot
+  model_key: qwen3a30b
+  prompt_id: cot
+- run_name: qwen3a30bthinking_direct
+  model_key: qwen3a30bthinking
+  prompt_id: direct
+- run_name: qwen3a32b_direct
+  model_key: qwen3a32b
+  prompt_id: direct
+- run_name: qwen3a32b_cot
+  model_key: qwen3a32b
+  prompt_id: cot
+- run_name: qwen3a32bthinking_direct
+  model_key: qwen3a32bthinking
+  prompt_id: direct
+- run_name: qwen3a4b_direct
+  model_key: qwen3a4b
+  prompt_id: direct
+- run_name: qwen3a4b_cot
+  model_key: qwen3a4b
+  prompt_id: cot
+- run_name: qwen3a4bthinking_direct
+  model_key: qwen3a4bthinking
+  prompt_id: direct
+- run_name: qwen3a8b_direct
+  model_key: qwen3a8b
+  prompt_id: direct
+- run_name: qwen3a8b_cot
+  model_key: qwen3a8b
+  prompt_id: cot
+- run_name: qwen3a8bthinking_direct
+  model_key: qwen3a8bthinking
+  prompt_id: direct
