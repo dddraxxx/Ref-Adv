@@ -2,7 +2,7 @@
 
 🏠[Website](https://ref-adv.github.io) | 🤗[Dataset](https://huggingface.co/datasets/dddraxxx/ref_adv) | 📄[Paper](https://openreview.net/forum?id=iEBgrepR9i)
 
-Official evaluation code for **"Ref-Adv: Exploring MLLM Visual Reasoning in Referring Expression Tasks"** (ICLR 2026).
+Official code for **"Ref-Adv: Exploring MLLM Visual Reasoning in Referring Expression Tasks"** (ICLR 2026).
 
 <p align="center">
   <img src="assets/teaser.png" width="85%">
