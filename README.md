@@ -1,30 +1,50 @@
-# Grounding Eval Repro
+# Ref-Adv
 
-Minimal public repro package for Ref-Adv grounding eval (Qwen series, temperature=0.0 setting).
+🏠[Website](https://ref-adv.github.io) | 🤗[Dataset](https://huggingface.co/datasets/dddraxxx/ref_adv) | 📄[Paper](https://openreview.net/forum?id=iEBgrepR9i)
 
-## Scope
+Official evaluation code for **"Ref-Adv: Exploring MLLM Visual Reasoning in Referring Expression Tasks"** (ICLR 2026).
 
-This directory contains:
+<p align="center">
+  <img src="assets/teaser.png" width="85%">
+</p>
 
-- Minimal eval code (`run.py`, `report.py`)
-- One consolidated config (`configs/qwen.yaml`)
-- Minimal prediction JSONLs for all completed Qwen runs (temp=0.0)
+## 🔥 News
 
-This package intentionally does **not** include summary JSON files.
+- **[2026/01]** Ref-Adv accepted to ICLR 2026!
+- **[2026/01]** Evaluation code and model predictions released.
 
-## Install
+## 📖 Introduction
 
-Run commands from this directory.
+Ref-Adv is a referring expression comprehension (REC) benchmark designed to probe the visual reasoning capabilities of multimodal large language models (MLLMs). Standard REC benchmarks contain shortcuts that allow models to succeed without true visual reasoning. Ref-Adv addresses this by pairing complex referring expressions with hard visual distractors, featuring an average expression length of 11.5 words, 4.01 distractors per image (each case contains at least 2 distractors), and a 21.25% negation ratio.
+
+**Ref-Adv-s** is the publicly released subset containing **1,142 cases** with evaluation code and model predictions. The dataset is uploaded to [HuggingFace](https://huggingface.co/datasets/dddraxxx/ref_adv).
+
+## ⚙️ Setup
 
 ```bash
-python -m pip install -r requirements.txt
+git clone https://github.com/dddraxxx/ref_adv_codex.git
+cd ref_adv_codex
+pip install -r requirements.txt
 ```
 
-## Run One Eval
+## 🧪 Evaluation
 
-Start a vLLM OpenAI-compatible server first (model must match the run's `model_full_name`).
+### Pre-computed Predictions
 
-Then run:
+All model predictions are included in `outputs/qwen/`. You can directly run `report.py` on these files to reproduce the results table without re-running inference.
+
+### VLM Serving
+
+We serve the Qwen VLM series using their official repositories with [vLLM](https://docs.vllm.ai/):
+
+- [Qwen2.5-VL / Qwen3-VL](https://github.com/QwenLM/Qwen3-VL)
+- [Qwen3.5](https://github.com/QwenLM/Qwen3.5)
+
+Generation parameters (temperature, top_p, etc.) are specified in `configs/qwen.yaml`.
+
+### Run One Eval
+
+Start an OpenAI-compatible server first (model must match the run's `model_full_name`), then run:
 
 ```bash
 python run.py \
@@ -32,49 +52,82 @@ python run.py \
   --run-name qwen35a35b_direct
 ```
 
-Output:
+Output: `outputs/qwen/<run_name>_predictions.jsonl`
 
-- `outputs/qwen/<run_name>_predictions.jsonl`
-
-## Compute Metrics Table
+### Compute Metrics
 
 ```bash
 python report.py \
   --glob 'outputs/qwen/*_predictions.jsonl' \
-  --output-md '../doc/eval_table.md'
+  --output-md eval_table.md
 ```
 
-The report includes:
+The report includes `Acc@0.5`, `Acc@0.75`, `Acc@0.9`, parse-fail count, and distractor-bin breakdowns (`2-3`, `4-6`, `>=7`).
 
-- `Acc@0.5`, `Acc@0.75`, `Acc@0.9`
-- parse-fail count
-- distractor bins (`2-3`, `4-6`, `>=7`) and delta vs overall `Acc@0.5`
+### JSONL Schema
 
-## Minimal JSONL Row Schema
+<details>
+<summary>Click to expand prediction JSONL fields</summary>
 
-Each line contains only:
+Each line contains:
 
-- `row_idx`
-- `file_name`
-- `normal_caption`
-- `image_source`
-- `human_authored`
-- `use_negation`
-- `distractor_count`
-- `gt_bbox_xyxy`
-- `pred_box_xyxy_first`
-- `first_iou`
-- `first_hit`
-- `parse_error`
-- `retry_followup_used`
-- `model_full_name`
-- `prompt_id`
-- `pred_box_expected_format`
+| Field | Description |
+|---|---|
+| `row_idx` | Dataset row index |
+| `file_name` | Image filename |
+| `normal_caption` | Referring expression |
+| `image_source` | COCO or OpenImages |
+| `human_authored` | Whether the caption is human-written |
+| `use_negation` | Whether the caption uses negation |
+| `distractor_count` | Number of distractors in the image |
+| `gt_bbox_xyxy` | Ground-truth bounding box (absolute xyxy) |
+| `pred_box_xyxy_first` | Predicted bounding box |
+| `first_iou` | IoU between prediction and ground truth |
+| `first_hit` | Whether IoU >= 0.5 |
+| `parse_error` | Whether bbox parsing failed |
+| `retry_followup_used` | Whether a follow-up retry was used |
+| `model_full_name` | Model identifier |
+| `prompt_id` | `direct` or `cot` |
+| `pred_box_expected_format` | `abs_xyxy` or `norm_1000_xyxy` |
 
-## Notes
+</details>
 
-- Prompt IDs are `direct` and `cot`.
-- Decode setting is fixed in config (`temperature=0.0`, `top_p=1.0`).
-- IoU uses absolute `xyxy` (`solution` from HF dataset) as GT.
-- Prediction coordinate format is fixed per model in config (`abs_xyxy` or `norm_1000_xyxy`).
-- Parse-fail rows are counted in denominator for accuracy metrics.
+## 📊 Results
+
+> **See the full results table (all 46 configurations) at [ref-adv.github.io/#results](https://ref-adv.github.io/#results).**
+
+Best model per family on Ref-Adv-s (temperature=0.0):
+
+| Model | CoT | Acc@0.5 | Acc@0.75 | Acc@0.9 |
+|---|:---:|:---:|:---:|:---:|
+| Human Expert (High)* | -- | 90.3 | -- | -- |
+| Human Expert (Medium)* | -- | 80.6 | -- | -- |
+| Qwen2.5-VL-72B | | 54.0 | 40.1 | 18.0 |
+| Qwen2.5-VL-72B | ✓ | 52.4 | 39.0 | 18.3 |
+| Qwen3-VL-235B-A22B-Thinking | ✓ | 67.1 | 53.6 | 31.8 |
+| Qwen3-VL-32B-Thinking | ✓ | 65.6 | 52.8 | 31.6 |
+| Qwen3-VL-8B-Thinking | ✓ | 59.5 | 48.2 | 27.3 |
+| Qwen3-VL-4B-Thinking | ✓ | 57.6 | 45.5 | 27.8 |
+| Qwen3.5-397B-A17B-FP8 | ✓ | **68.0** | **55.6** | 34.2 |
+| Qwen3.5-122B-A10B | ✓ | 67.2 | 55.0 | **35.1** |
+| Qwen3.5-27B | ✓ | 67.3 | 54.9 | 32.7 |
+
+\* Human expert results evaluated on a randomly selected subset.
+
+
+## 📝 Citation
+
+```bibtex
+@inproceedings{
+    dong2026refadv,
+    title={Ref-Adv: Exploring {MLLM} Visual Reasoning in Referring Expression Tasks},
+    author={Qihua Dong and Kuo Yang and Lin Ju and Handong Zhao and Yitian Zhang and Yizhou Wang and Huimin Zeng and Jianglin Lu and Yun Fu},
+    booktitle={The Fourteenth International Conference on Learning Representations},
+    year={2026},
+    url={https://openreview.net/forum?id=iEBgrepR9i}
+}
+```
+
+## 📄 License
+
+Code is released under the [Apache 2.0 License](LICENSE). Dataset is available on [HuggingFace](https://huggingface.co/datasets/dddraxxx/ref_adv) under its own license.
