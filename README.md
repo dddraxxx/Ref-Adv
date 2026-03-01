@@ -1,6 +1,6 @@
 # Ref-Adv
 
-🏠[Website](https://ref-adv.github.io) | 🤗[Dataset](https://huggingface.co/datasets/dddraxxx/ref_adv) | 📄[Paper](https://openreview.net/forum?id=iEBgrepR9i)
+🏠[Website](https://ref-adv.github.io) | 🤗[Dataset](https://huggingface.co/datasets/dddraxxx/ref-adv-s) | 📄[Paper](https://openreview.net/forum?id=iEBgrepR9i)
 
 Official code for **"Ref-Adv: Exploring MLLM Visual Reasoning in Referring Expression Tasks"** (ICLR 2026).
 
@@ -17,7 +17,7 @@ Official code for **"Ref-Adv: Exploring MLLM Visual Reasoning in Referring Expre
 
 Ref-Adv is a referring expression comprehension (REC) benchmark designed to probe the visual reasoning capabilities of multimodal large language models (MLLMs). Standard REC benchmarks contain shortcuts that allow models to succeed without true visual reasoning. Ref-Adv addresses this by pairing complex referring expressions with hard visual distractors, featuring an average expression length of 11.5 words, 4.01 distractors per image (each case contains at least 2 distractors), and a 21.25% negation ratio.
 
-**Ref-Adv-s** is the publicly released subset containing **1,142 cases** with evaluation code and model predictions. The dataset is uploaded to [HuggingFace](https://huggingface.co/datasets/dddraxxx/ref_adv).
+**Ref-Adv-s** is the publicly released subset containing **1,142 cases** with evaluation code and model predictions. The dataset is uploaded to [HuggingFace](https://huggingface.co/datasets/dddraxxx/ref-adv-s).
 
 ## ⚙️ Setup
 
@@ -130,4 +130,4 @@ Best model per family on Ref-Adv-s (temperature=0.0):
 
 ## 📄 License
 
-Code is released under the [Apache 2.0 License](LICENSE). Dataset is available on [HuggingFace](https://huggingface.co/datasets/dddraxxx/ref_adv) under its own license.
+Code is released under the [Apache 2.0 License](LICENSE). Dataset is available on [HuggingFace](https://huggingface.co/datasets/dddraxxx/ref-adv-s) under its own license.

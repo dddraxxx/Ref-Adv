@@ -1,7 +1,7 @@
 server:
   base_url: http://127.0.0.1:8000/v1
 dataset:
-  repo_id: dddraxxx/ref_adv
+  repo_id: dddraxxx/ref-adv-s
   split: train
   start_index: 0
   limit: 0
