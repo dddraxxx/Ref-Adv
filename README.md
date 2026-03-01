@@ -22,8 +22,8 @@ Ref-Adv is a referring expression comprehension (REC) benchmark designed to prob
 ## ⚙️ Setup
 
 ```bash
-git clone https://github.com/dddraxxx/ref_adv_codex.git
-cd ref_adv_codex
+git clone https://github.com/dddraxxx/Ref-Adv.git
+cd Ref-Adv
 pip install -r requirements.txt
 ```
 
