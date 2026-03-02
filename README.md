@@ -1,6 +1,6 @@
 # Ref-Adv
 
-🏠[Website](https://ref-adv.github.io) | 🤗[Dataset](https://huggingface.co/datasets/dddraxxx/ref-adv-s) | 📄[Paper](https://openreview.net/forum?id=iEBgrepR9i)
+🏠[Website](https://ref-adv.github.io) | 🤗[Dataset](https://huggingface.co/datasets/dddraxxx/ref-adv-s) | 📄[Paper](https://arxiv.org/abs/2602.23898)
 
 Official code for **"Ref-Adv: Exploring MLLM Visual Reasoning in Referring Expression Tasks"** (ICLR 2026).
 
@@ -118,13 +118,11 @@ Best model per family on Ref-Adv-s (temperature=0.0):
 ## 📝 Citation
 
 ```bibtex
-@inproceedings{
-    dong2026refadv,
-    title={Ref-Adv: Exploring {MLLM} Visual Reasoning in Referring Expression Tasks},
-    author={Qihua Dong and Kuo Yang and Lin Ju and Handong Zhao and Yitian Zhang and Yizhou Wang and Huimin Zeng and Jianglin Lu and Yun Fu},
-    booktitle={The Fourteenth International Conference on Learning Representations},
-    year={2026},
-    url={https://openreview.net/forum?id=iEBgrepR9i}
+@article{dong2026refadv,
+  title   = {Ref-Adv: Exploring MLLM Visual Reasoning in Referring Expression Tasks},
+  author  = {Qihua Dong and Kuo Yang and Lin Ju and Handong Zhao and Yitian Zhang and Yizhou Wang and Huimin Zeng and Jianglin Lu and Yun Fu},
+  year    = {2026},
+  journal = {arXiv preprint arXiv: 2602.23898}
 }
 ```
 
