@@ -96,7 +96,7 @@ Each line contains:
 
 > **See the full results table (all 46 configurations) at [ref-adv.github.io/#results](https://ref-adv.github.io/#results).**
 
-Best model per family on Ref-Adv-s (temperature=0.0):
+Best model per Qwen family on Ref-Adv-s (temperature=0.0):
 
 | Model | CoT | Acc@0.5 | Acc@0.75 | Acc@0.9 |
 |---|:---:|:---:|:---:|:---:|
