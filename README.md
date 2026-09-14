@@ -10,6 +10,7 @@ Official code for **"Ref-Adv: Exploring MLLM Visual Reasoning in Referring Expre
 
 ## 🔥 News
 
+- **[2026/08]** 🎉 Ref-Adv-s is now supported by [EvalScope](https://evalscope.readthedocs.io/en/latest/benchmarks/ref_adv_s.html)! 🚀 Thanks to the EvalScope team for the integration! 🙌
 - **[2026/01]** Ref-Adv accepted to ICLR 2026!
 - **[2026/01]** Evaluation code and model predictions released.
 
