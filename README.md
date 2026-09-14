@@ -29,6 +29,8 @@ pip install -r requirements.txt
 
 ## 🧪 Evaluation
 
+Ref-Adv-s is also supported by EvalScope for evaluation with OpenAI-compatible model endpoints. See the [EvalScope usage guide](https://evalscope.readthedocs.io/en/latest/benchmarks/ref_adv_s.html).
+
 ### Pre-computed Predictions
 
 All model predictions are included in `outputs/qwen/`. You can directly run `report.py` on these files to reproduce the results table without re-running inference.
