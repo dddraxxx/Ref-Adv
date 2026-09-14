@@ -30,7 +30,20 @@ pip install -r requirements.txt
 
 ## 🧪 Evaluation
 
+### 🚀 Evaluate with EvalScope
+
 Ref-Adv-s is also supported by EvalScope for evaluation with OpenAI-compatible model endpoints. See the [EvalScope usage guide](https://evalscope.readthedocs.io/en/latest/benchmarks/ref_adv_s.html).
+
+```bash
+evalscope eval \
+  --model YOUR_MODEL \
+  --api-url OPENAI_API_COMPAT_URL \
+  --api-key EMPTY_TOKEN \
+  --datasets ref_adv_s \
+  --limit 10
+```
+
+Remove `--limit 10` to evaluate the full dataset. See the usage guide above for setup and model-specific options.
 
 ### Pre-computed Predictions
 
